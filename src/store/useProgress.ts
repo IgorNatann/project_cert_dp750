@@ -12,7 +12,7 @@ import { todayISO } from '../lib/date'
 import { registrarOfensiva } from '../lib/streak'
 import type { SimuladoRecord } from '../types'
 
-interface ProgressData {
+export interface ProgressData {
   /** itemId (módulo/tarefa) -> data de conclusão (ISO). Ausente = não concluído. */
   concluidos: Record<string, string>
   /** badgeId -> data de desbloqueio (ISO). */
@@ -24,6 +24,8 @@ interface ProgressData {
   streakRecorde: number
   ultimoDiaAtivo: string | null
   freezeDisponivel: boolean
+  /** Epoch (ms) da última mutação local — base para reconciliar com a nuvem. */
+  updatedAt: number
 }
 
 interface Actions {
@@ -31,6 +33,8 @@ interface Actions {
   addSimulado: (r: Omit<SimuladoRecord, 'id'>) => void
   removeSimulado: (id: string) => void
   reset: () => void
+  /** Substitui o estado local pelos dados vindos da nuvem (preserva o updatedAt remoto). */
+  hydrateFromRemote: (data: ProgressData) => void
 }
 
 export type ProgressStore = ProgressData & Actions
@@ -44,6 +48,7 @@ const initial: ProgressData = {
   streakRecorde: 0,
   ultimoDiaAtivo: null,
   freezeDisponivel: true,
+  updatedAt: 0,
 }
 
 /** Reavalia as badges sobre um estado e devolve o mapa atualizado (nunca remove desbloqueios). */
@@ -94,20 +99,26 @@ export const useProgress = create<ProgressStore>()(
             concluidos[itemId] = todayISO()
             base = comAtividade({ ...s, concluidos })
           }
-          return { ...base, badges: avaliarBadges(base) }
+          return { ...base, badges: avaliarBadges(base), updatedAt: Date.now() }
         }),
 
       addSimulado: (r) =>
         set((s) => {
           const rec: SimuladoRecord = { ...r, id: `sim_${Date.now()}` }
           const base = comAtividade({ ...s, simulados: [...s.simulados, rec] })
-          return { ...base, badges: avaliarBadges(base) }
+          return { ...base, badges: avaliarBadges(base), updatedAt: Date.now() }
         }),
 
       removeSimulado: (id) =>
-        set((s) => ({ ...s, simulados: s.simulados.filter((r) => r.id !== id) })),
+        set((s) => ({
+          ...s,
+          simulados: s.simulados.filter((r) => r.id !== id),
+          updatedAt: Date.now(),
+        })),
 
-      reset: () => set(() => ({ ...initial })),
+      reset: () => set(() => ({ ...initial, updatedAt: Date.now() })),
+
+      hydrateFromRemote: (data) => set(() => ({ ...data })),
     }),
     {
       name: 'deltaquest-v1',
@@ -120,6 +131,7 @@ export const useProgress = create<ProgressStore>()(
         streakRecorde: s.streakRecorde,
         ultimoDiaAtivo: s.ultimoDiaAtivo,
         freezeDisponivel: s.freezeDisponivel,
+        updatedAt: s.updatedAt,
       }),
     },
   ),
@@ -136,4 +148,19 @@ export function selectXp(s: ProgressStore): number {
   for (const t of TAREFAS_REVISAO) if (s.concluidos[t.id]) xp += XP.tarefaRevisao
   xp += s.diasDeEstudo * XP.diaDeEstudo
   return xp
+}
+
+/** Extrai apenas os dados persistíveis (o que vai/volta da nuvem). */
+export function selectData(s: ProgressStore): ProgressData {
+  return {
+    concluidos: s.concluidos,
+    badges: s.badges,
+    simulados: s.simulados,
+    diasDeEstudo: s.diasDeEstudo,
+    streakAtual: s.streakAtual,
+    streakRecorde: s.streakRecorde,
+    ultimoDiaAtivo: s.ultimoDiaAtivo,
+    freezeDisponivel: s.freezeDisponivel,
+    updatedAt: s.updatedAt,
+  }
 }
