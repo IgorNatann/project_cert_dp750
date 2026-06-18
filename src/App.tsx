@@ -3,6 +3,7 @@ import { Checklist } from './components/Checklist'
 import { Simulados } from './components/Simulados'
 import { Badges } from './components/Badges'
 import { RewardToasts } from './components/RewardToasts'
+import { SyncBar } from './components/SyncBar'
 import { useProgress } from './store/useProgress'
 
 export default function App() {
@@ -17,12 +18,15 @@ export default function App() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 sm:py-10">
       <RewardToasts />
-      <header className="mb-6">
-        <h1 className="font-mono text-xl font-bold tracking-tight">
-          <span className="text-done">Delta</span>
-          <span className="text-xp">Quest</span>
-        </h1>
-        <p className="text-sm text-muted">Trilha gamificada — certificação DP-750</p>
+      <header className="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h1 className="font-mono text-xl font-bold tracking-tight">
+            <span className="text-done">Delta</span>
+            <span className="text-xp">Quest</span>
+          </h1>
+          <p className="text-sm text-muted">Trilha gamificada — certificação DP-750</p>
+        </div>
+        <SyncBar />
       </header>
 
       <TopBar />
@@ -34,7 +38,7 @@ export default function App() {
       </main>
 
       <footer className="mt-12 flex items-center justify-between border-t border-border pt-6">
-        <span className="text-xs text-muted">Progresso salvo neste dispositivo.</span>
+        <span className="text-xs text-muted">Progresso salvo automaticamente.</span>
         <button
           onClick={handleReset}
           className="rounded text-xs text-muted transition-colors hover:text-streak focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-streak/50"
