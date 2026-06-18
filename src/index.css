@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+/* Tema escuro estilo IDE (PRD §8). As chaves --color-* viram utilitários
+   do Tailwind v4: bg-bg, bg-surface, text-muted, text-xp, border-border, etc. */
+@theme {
+  --color-bg: #0d1117;
+  --color-surface: #161b22;
+  --color-surface-2: #1c2330;
+  --color-border: #30363d;
+  --color-text: #c9d1d9;
+  --color-muted: #8b949e;
+
+  --color-xp: #f0b429;      /* âmbar — XP / níveis */
+  --color-badge: #39c5cf;   /* ciano — conquistas */
+  --color-streak: #ff7b35;  /* laranja-quente — ofensiva */
+  --color-done: #3fb950;    /* verde — concluído */
+
+  --font-mono: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, Consolas, monospace;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+/* Microinterações (PRD §8) — recompensas acendem; o resto fica quieto. */
+@keyframes dq-pop {
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes dq-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(57, 197, 207, 0);
+  }
+  30% {
+    box-shadow: 0 0 18px 3px rgba(57, 197, 207, 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(57, 197, 207, 0);
+  }
+}
+@keyframes dq-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+.animate-pop {
+  animation: dq-pop 320ms ease-out;
+}
+.animate-glow {
+  animation: dq-glow 1300ms ease-out;
+}
+.animate-pulse-soft {
+  animation: dq-pulse 2.4s ease-in-out infinite;
+}
+
+/* Respeita reduce-motion (PRD §7) — também corta loops infinitos p/ não piscar. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
