@@ -10,15 +10,20 @@ const STATUS: Record<SyncStatus, { dot: string; label: string }> = {
   error: { dot: 'bg-streak', label: 'erro' },
 }
 
+const inputCls =
+  'w-48 rounded-md border border-border bg-bg px-2 py-1 text-text placeholder:text-muted outline-none focus-visible:ring-2 focus-visible:ring-badge/60'
+
 export function SyncBar() {
   const configured = useSync((s) => s.configured)
   const session = useSync((s) => s.session)
   const status = useSync((s) => s.status)
   const message = useSync((s) => s.message)
-  const signIn = useSync((s) => s.signIn)
+  const signInPassword = useSync((s) => s.signInPassword)
+  const signUpPassword = useSync((s) => s.signUpPassword)
   const signOut = useSync((s) => s.signOut)
 
   const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [open, setOpen] = useState(false)
 
   // Sem Supabase configurado: modo local puro.
@@ -45,13 +50,17 @@ export function SyncBar() {
     )
   }
 
-  function submit(e: FormEvent) {
+  const valido = email.trim().length > 0 && password.length >= 6
+
+  function entrar(e: FormEvent) {
     e.preventDefault()
-    const value = email.trim()
-    if (value) void signIn(value)
+    if (valido) void signInPassword(email.trim(), password)
+  }
+  function criar() {
+    if (valido) void signUpPassword(email.trim(), password)
   }
 
-  // Deslogado: entrar com magic link.
+  // Deslogado: e-mail + senha (entrar ou criar conta).
   return (
     <div className="text-right text-xs">
       {!open ? (
@@ -62,26 +71,49 @@ export function SyncBar() {
           Entrar para sincronizar
         </button>
       ) : (
-        <form onSubmit={submit} className="flex items-center gap-2">
+        <form onSubmit={entrar} className="flex flex-col items-end gap-2">
           <input
             type="email"
             required
+            autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="seu@email.com"
-            aria-label="E-mail para login"
-            className="w-44 rounded-md border border-border bg-bg px-2 py-1 text-text placeholder:text-muted outline-none focus-visible:ring-2 focus-visible:ring-badge/60"
+            aria-label="E-mail"
+            className={inputCls}
           />
-          <button
-            type="submit"
-            className="rounded-md bg-badge px-2 py-1 font-semibold text-bg transition-opacity hover:opacity-90"
-          >
-            enviar link
-          </button>
+          <input
+            type="password"
+            required
+            minLength={6}
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="senha (mín. 6)"
+            aria-label="Senha"
+            className={inputCls}
+          />
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={criar}
+              disabled={!valido}
+              className="rounded px-1 text-muted transition-colors hover:text-badge disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-badge/50"
+            >
+              criar conta
+            </button>
+            <button
+              type="submit"
+              disabled={!valido}
+              className="rounded-md bg-badge px-3 py-1 font-semibold text-bg transition-opacity hover:opacity-90 disabled:opacity-40"
+            >
+              entrar
+            </button>
+          </div>
         </form>
       )}
-      {message && <p className="mt-1 max-w-[16rem] text-muted">{message}</p>}
-      {status === 'error' && !message && <p className="mt-1 text-streak">falha ao sincronizar</p>}
+      {message && <p className="mt-1 max-w-[18rem] text-muted">{message}</p>}
+      {status === 'error' && !message && <p className="mt-1 text-streak">falha ao entrar</p>}
     </div>
   )
 }
