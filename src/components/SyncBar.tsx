@@ -25,6 +25,7 @@ export function SyncBar() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [open, setOpen] = useState(false)
+  const [erro, setErro] = useState<string | null>(null)
 
   // Sem Supabase configurado: modo local puro.
   if (!configured) {
@@ -50,14 +51,24 @@ export function SyncBar() {
     )
   }
 
-  const valido = email.trim().length > 0 && password.length >= 6
-
+  function validar(): boolean {
+    if (email.trim().length === 0) {
+      setErro('Informe o e-mail.')
+      return false
+    }
+    if (password.length < 6) {
+      setErro('A senha precisa ter ao menos 6 caracteres.')
+      return false
+    }
+    setErro(null)
+    return true
+  }
   function entrar(e: FormEvent) {
     e.preventDefault()
-    if (valido) void signInPassword(email.trim(), password)
+    if (validar()) void signInPassword(email.trim(), password)
   }
   function criar() {
-    if (valido) void signUpPassword(email.trim(), password)
+    if (validar()) void signUpPassword(email.trim(), password)
   }
 
   // Deslogado: e-mail + senha (entrar ou criar conta).
@@ -97,21 +108,20 @@ export function SyncBar() {
             <button
               type="button"
               onClick={criar}
-              disabled={!valido}
-              className="rounded px-1 text-muted transition-colors hover:text-badge disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-badge/50"
+              className="rounded px-1 text-muted transition-colors hover:text-badge focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-badge/50"
             >
               criar conta
             </button>
             <button
               type="submit"
-              disabled={!valido}
-              className="rounded-md bg-badge px-3 py-1 font-semibold text-bg transition-opacity hover:opacity-90 disabled:opacity-40"
+              className="rounded-md bg-badge px-3 py-1 font-semibold text-bg transition-opacity hover:opacity-90"
             >
               entrar
             </button>
           </div>
         </form>
       )}
+      {erro && <p className="mt-1 text-streak">{erro}</p>}
       {message && <p className="mt-1 max-w-[18rem] text-muted">{message}</p>}
       {status === 'error' && !message && <p className="mt-1 text-streak">falha ao entrar</p>}
     </div>
