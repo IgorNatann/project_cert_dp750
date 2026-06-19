@@ -17,10 +17,19 @@ interface SyncState {
   status: SyncStatus
   /** Mensagem para a UI (ex.: confirmação de envio do magic link). */
   message: string | null
-  signIn: (email: string) => Promise<void>
+  signInPassword: (email: string, password: string) => Promise<void>
+  signUpPassword: (email: string, password: string) => Promise<void>
   signOut: () => Promise<void>
   /** uso interno do controlador */
   _set: (partial: Partial<SyncState>) => void
+}
+
+function traduzErroAuth(msg: string): string {
+  if (/invalid login credentials/i.test(msg)) return 'E-mail ou senha incorretos.'
+  if (/already registered|already exists/i.test(msg)) return 'Esse e-mail já tem conta — use Entrar.'
+  if (/password should be at least/i.test(msg)) return 'A senha precisa ter ao menos 6 caracteres.'
+  if (/email not confirmed/i.test(msg)) return 'E-mail não confirmado — desative "Confirm email" no Supabase.'
+  return msg
 }
 
 export const useSync = create<SyncState>((set) => ({
@@ -30,18 +39,27 @@ export const useSync = create<SyncState>((set) => ({
   message: null,
   _set: (partial) => set(partial),
 
-  signIn: async (email) => {
+  signInPassword: async (email, password) => {
     if (!supabase) return
     set({ message: null })
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: window.location.origin },
-    })
-    set(
-      error
-        ? { status: 'error', message: error.message }
-        : { message: `Link de acesso enviado para ${email}. Confira seu e-mail.` },
-    )
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    if (error) set({ status: 'error', message: traduzErroAuth(error.message) })
+    // sucesso → onAuthStateChange dispara o sync
+  },
+
+  signUpPassword: async (email, password) => {
+    if (!supabase) return
+    set({ message: null })
+    const { data, error } = await supabase.auth.signUp({ email, password })
+    if (error) {
+      set({ status: 'error', message: traduzErroAuth(error.message) })
+    } else if (!data.session) {
+      set({
+        message:
+          'Conta criada, mas falta confirmar por e-mail. Desative "Confirm email" no Supabase para entrar direto.',
+      })
+    }
+    // com sessão → onAuthStateChange dispara o sync
   },
 
   signOut: async () => {
