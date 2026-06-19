@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { selectXp, useProgress } from '../store/useProgress'
 import { levelFromXp } from '../data/xp'
 import { BADGES } from '../data/badges'
@@ -24,16 +24,16 @@ export function RewardToasts() {
   const counter = useRef(0)
   const [toasts, setToasts] = useState<Toast[]>([])
 
-  function push(kind: Toast['kind'], text: string) {
+  const push = useCallback((kind: Toast['kind'], text: string) => {
     const id = (counter.current += 1)
     setToasts((prev) => [...prev, { id, kind, text }])
     setTimeout(() => setToasts((prev) => prev.filter((t) => t.id !== id)), 3200)
-  }
+  }, [])
 
   useEffect(() => {
     if (level > prevLevel.current) push('level', `Nível ${level} alcançado!`)
     prevLevel.current = level
-  }, [level])
+  }, [level, push])
 
   useEffect(() => {
     const atuais = Object.keys(badges)
@@ -44,7 +44,7 @@ export function RewardToasts() {
       }
     }
     prevBadges.current = new Set(atuais)
-  }, [badges])
+  }, [badges, push])
 
   if (toasts.length === 0) return null
 
