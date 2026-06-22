@@ -21,6 +21,10 @@ sustentar a motivação e a consistência, não só registrar progresso. App de 
   sequência) e tem um "freeze" de tolerância.
 - **Registro de simulados** com histórico e **mini-gráfico (sparkline)** de evolução das notas.
 - **Microinterações**: toasts de level-up e de badge, glow ao desbloquear, countdown pulsando.
+- **Matéria de apoio por módulo**: tópicos do guia oficial DP-750 (habilidades medidas) e link
+  para o Microsoft Learn, em cada card da trilha.
+- **Sincronização opcional na nuvem** (Supabase): com login leve, o mesmo progresso acompanha
+  PC e celular; sem login, roda 100% local.
 - **Persistência local** automática e **acessibilidade** (foco de teclado, `prefers-reduced-motion`).
 
 ## 🧱 Stack
@@ -30,8 +34,8 @@ sustentar a motivação e a consistência, não só registrar progresso. App de 
 | UI | React 19 + Vite 6 + TypeScript |
 | Estilo | Tailwind CSS v4 (tema escuro estilo IDE) |
 | Estado + persistência | Zustand (`persist`) → `localStorage` |
-| Sync entre dispositivos *(planejado)* | Supabase |
-| Hospedagem *(planejada)* | Vercel |
+| Sync entre dispositivos (opt-in) | Supabase (Postgres + Auth, RLS, realtime) |
+| Hospedagem | Vercel (deploy automático no merge à `main`) |
 
 ## 🚀 Começando
 
@@ -50,15 +54,19 @@ npm run dev      # ambiente de desenvolvimento (http://localhost:5173)
 | `npm run build` | Build de produção em `dist/` |
 | `npm run preview` | Serve o build de produção localmente |
 | `npm run typecheck` | Checagem de tipos com `tsc --noEmit` |
+| `npm run test` | Testes unitários (Vitest) |
+| `npm run test:watch` | Testes em modo watch |
+| `npm run lint` | Lint com ESLint |
+| `npm run format` | Formatação com Prettier |
 
 ## 📂 Estrutura
 
 ```
 src/
-├─ data/         # dados do domínio: trilha (15 módulos), regras de XP, badges
-├─ lib/          # utilitários puros: datas e lógica de ofensiva
-├─ store/        # store Zustand (estado + ações + persistência)
-├─ components/   # UI: dashboard, checklist, simulados, badges, toasts
+├─ data/         # domínio: trilha (15 módulos), XP, badges, matéria de apoio (guia.ts)
+├─ lib/          # utilitários: datas, lógica de ofensiva, cliente Supabase
+├─ store/        # stores Zustand: progresso (persist) e sincronização na nuvem
+├─ components/   # UI: dashboard, checklist, simulados, badges, toasts, barra de sync
 ├─ App.tsx       # composição da página
 └─ index.css     # tema (tokens de cor) e microinterações
 .llm/PRD/        # PRD do produto e checklist canônico da trilha
@@ -77,19 +85,23 @@ Detalhes e regras completas vivem em [`.llm/PRD/DeltaQuest_PRD.md`](.llm/PRD/Del
 
 ## 🔐 Dados & privacidade
 
-Todo o progresso é salvo **no próprio navegador** (`localStorage`, chave `deltaquest-v1`).
-Nada sai do dispositivo. A sincronização entre dispositivos (Supabase) está no roadmap e será
-opt-in.
+Todo o progresso é salvo **no próprio navegador** (`localStorage`, chave `deltaquest-v1`) e o
+app é **offline-first**: abre e funciona sem internet. A **sincronização entre dispositivos é
+opt-in** — só ocorre se você fizer login (Supabase Auth) com as variáveis `VITE_SUPABASE_URL`
+e `VITE_SUPABASE_ANON_KEY` configuradas; então o progresso vai para uma linha sua no Postgres,
+protegida por RLS, com estratégia *last-write-wins*. Sem login, nada sai do dispositivo.
 
 ## 🗺️ Roadmap
 
 - [x] MVP local-first (dashboard, checklist, XP/níveis, badges, ofensiva, countdown)
 - [x] Registro de simulados com gráfico de evolução *(v1.1)*
 - [x] Microinterações de recompensa e acessibilidade *(v1.2)*
-- [ ] Sincronização entre dispositivos (Supabase + login leve)
+- [x] Sincronização entre dispositivos (Supabase + login leve)
+- [x] Deploy na Vercel (automático no merge à `main`)
+- [x] Testes automatizados (Vitest) + lint/format (ESLint/Prettier)
+- [x] Matéria de apoio por módulo (guia oficial DP-750)
 - [ ] PWA: instalável e offline
-- [ ] Deploy na Vercel
-- [ ] Export/import de progresso (JSON) e testes automatizados
+- [ ] Export/import de progresso (JSON)
 
 ---
 

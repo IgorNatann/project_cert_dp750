@@ -4,12 +4,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Estado atual
 
-**MVP local-first + v1.1 + v1.2 concluídos** e validados (`npm run build` + `typecheck` ok):
-dashboard, checklist gamificado (15 módulos + simulados + revisão), XP/níveis, badges,
-ofensiva, contagem regressiva, **registro de simulados com sparkline** (F6) e
-**microinterações** (toasts de level-up/badge, glow, countdown pulsando — F10), tudo
-persistido em `localStorage`. Pendente: **F7 sync Supabase**, **F8 PWA**, **F9 deploy
-Vercel**, depois extras/testes. Backlog completo: `C:\Users\Igorn\.claude\plans\keen-discovering-rose.md`.
+**MVP + v1.1 + v1.2 + sync na nuvem + deploy concluídos** e validados (`npm run build`,
+`typecheck`, `lint` e `test` ok — 25 testes): dashboard, checklist gamificado (15 módulos +
+simulados + revisão), XP/níveis, badges, ofensiva, contagem regressiva, **registro de
+simulados com sparkline** (F6), **microinterações** (toasts de level-up/badge, glow,
+countdown pulsando — F10), **sync Supabase com login leve** (F7) e **matéria de apoio por
+módulo** a partir do guia oficial DP-750 (`src/data/guia.ts`). Tudo persiste em `localStorage`
+(offline-first) e sincroniza quando há login + Supabase configurado.
+
+**Em produção:** deploy automático na Vercel a cada merge na `main` (F9) →
+https://deltaquest.vercel.app (projeto `deltaquest`).
+
+**Pendente:** **F8 PWA** (instalável/offline via `vite-plugin-pwa` — ainda não há plugin,
+manifest nem service worker) e extras (export/import de progresso em JSON).
+Backlog completo: `C:\Users\Igorn\.claude\plans\keen-discovering-rose.md`.
 
 Documentos-fonte:
 
@@ -25,15 +33,17 @@ Documentos-fonte:
 - **Sync entre dispositivos:** Supabase (Postgres + Auth). Login leve de **um único usuário**
   para ler/gravar o mesmo progresso no PC e no celular; RLS protege a linha do usuário.
   Estratégia **last-write-wins** (suficiente para 1 usuário).
-- **Offline / instalável:** PWA via `vite-plugin-pwa`.
+- **Offline / instalável:** PWA via `vite-plugin-pwa` *(planejado — ainda não implementado)*.
 - **Hospedagem:** Vercel (build estático, deploy no `git push`). **Sem servidor próprio / sem Render.**
 
-**Ordem de construção:** (A) MVP local-first 100% funcional com localStorage → (B) camada de
-sync Supabase → (C) deploy na Vercel. A fase B precisa das credenciais do projeto Supabase em
-`.env`: `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`.
+**Ordem de construção:** (A) MVP local-first com localStorage ✅ → (B) camada de sync
+Supabase ✅ → (C) deploy na Vercel ✅. Falta a camada PWA (instalável/offline). A fase B usa
+as credenciais do Supabase em `.env`: `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` — sem
+elas o cliente Supabase fica `null`, o sync vira no-op e o app roda 100% local.
 
-**Comandos (Vite):** `npm run dev` · `npm run build` · `npm run preview`.
-Atualize aqui quando lint/testes forem adicionados.
+**Comandos:** `npm run dev` · `npm run build` · `npm run preview` · `npm run typecheck`
+(`tsc --noEmit`) · `npm run test` (Vitest) · `npm run test:watch` · `npm run lint` (ESLint) ·
+`npm run format` (Prettier). Rode `typecheck` + `lint` + `test` + `build` antes de abrir PR.
 
 ## O produto: DeltaQuest
 
@@ -76,7 +86,8 @@ entrada do usuário:
   regressiva).
 - **XP por ação**: módulo 100 · bônus de percurso concluído 250 · tarefa de simulado 75 ·
   tarefa de revisão 50 · dia de estudo registrado 20.
-- **Curva de nível**: nível N exige `100 × N²` de XP acumulado (primeiros níveis rápidos).
+- **Curva de nível**: nível N exige `100 × (N − 1)²` de XP acumulado — offset para começar no
+  nível 1 com 0 XP (primeiros níveis rápidos). Ver `src/data/xp.ts` e `xp.test.ts`.
 - **Badges**: desbloqueadas por marcos reais (1º módulo, cada percurso, trilha 100%,
   ofensivas de 7/21 dias, simulado ≥ 85%, revisão completa). Lista completa na seção 5.2.
 - **Ofensiva (streak)**: conta **dias de estudo *planejados*** com atividade registrada —
@@ -88,6 +99,12 @@ entrada do usuário:
 > dos 15 módulos, tarefas de simulado e de revisão). Use-a como *seed* do app. Os títulos
 > dos módulos ali são uma reconstrução de melhor esforço — confirme-os com o candidato
 > antes de tratá-los como definitivos; percursos, contagens e datas-meta já são fiéis ao PRD.
+>
+> A **matéria de apoio** oficial (habilidades medidas do [guia DP-750](https://learn.microsoft.com/pt-br/credentials/certifications/resources/study-guides/dp-750))
+> está mapeada por módulo em `src/data/guia.ts` e exibida em cada card como tópicos
+> expansíveis + link do Microsoft Learn (todas as URLs validadas). O guia oficial se organiza
+> por **4 domínios com peso de exame** (15-20% / 30-35% / 30-35% / 15-20%), não pelos 15
+> módulos — o mapeamento aloca cada habilidade ao módulo mais próximo da trilha.
 
 ## Direção visual
 
