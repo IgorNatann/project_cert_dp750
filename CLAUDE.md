@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **MVP + v1.1 + v1.2 + sync na nuvem + deploy + PWA concluídos** e validados (`npm run build`,
 `typecheck`, `lint` e `test` ok — 29 testes): dashboard, checklist gamificado (15 módulos +
 simulados + revisão), XP/níveis, badges, ofensiva, contagem regressiva, **registro de
-simulados com sparkline** (F6), **microinterações** (toasts de level-up/badge, glow,
+simulados com sparkline** (F6), **microinterações** (tela de abertura com o logo se desenhando, toasts de level-up/badge, glow,
 countdown pulsando — F10), **sync Supabase com login leve** (F7), **matéria de apoio por
 módulo alinhada ao curso oficial DP-750T00** com link das aulas (`src/data/guia.ts`), **selo
 de peso do exame por percurso** e **PWA instalável/offline** (F8). Tudo persiste em `localStorage` (offline-first)
