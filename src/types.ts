@@ -3,6 +3,8 @@ export interface Percurso {
   nome: string
   /** Data-meta (ISO yyyy-mm-dd) */
   meta: string
+  /** Peso do domínio no exame DP-750 (ex.: '15–20%'), do guia oficial. */
+  pesoExame: string
   moduloIds: string[]
 }
 

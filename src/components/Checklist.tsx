@@ -128,7 +128,15 @@ function PercursoBlock({ percursoId }: { percursoId: string }) {
   return (
     <div className="rounded-lg border border-border bg-surface p-4">
       <div className="flex items-baseline justify-between gap-3">
-        <h3 className="text-sm font-semibold text-text">{p.nome}</h3>
+        <h3 className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm font-semibold text-text">
+          <span>{p.nome}</span>
+          <span
+            className="shrink-0 rounded border border-border px-1.5 py-0.5 font-mono text-[0.65rem] font-normal text-muted"
+            title="Peso do domínio no exame DP-750"
+          >
+            peso {p.pesoExame}
+          </span>
+        </h3>
         <span
           className={`shrink-0 font-mono text-xs ${
             completo ? 'text-done' : atrasado ? 'text-streak' : 'text-muted'

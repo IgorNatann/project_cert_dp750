@@ -11,11 +11,9 @@ Using Azure Databricks**.
 | **Data do exame** | 14/09/2026 |
 | **Total de módulos** | 15 (em 4 percursos) |
 
-> ⚠️ **Confirmar os títulos dos módulos.** Os títulos abaixo são uma reconstrução de
-> melhor esforço a partir da estrutura do PRD e do currículo oficial de Data Engineering
-> com Azure Databricks (Microsoft Learn). Ajuste-os para baterem exatamente com o seu
-> plano antes de usá-los como *seed* do app. As **contagens, percursos e datas-meta** já
-> estão fiéis ao PRD.
+> ✅ **Títulos confirmados (22/06/2026).** Os títulos dos 15 módulos foram confirmados pelo
+> candidato e são definitivos. Contagens, percursos, datas-meta e pesos de exame seguem fiéis
+> ao guia oficial DP-750 e ao PRD.
 >
 > 📚 **Matéria de apoio.** As habilidades medidas do [guia oficial DP-750](https://learn.microsoft.com/pt-br/credentials/certifications/resources/study-guides/dp-750)
 > estão mapeadas por módulo em `src/data/guia.ts` e aparecem em cada card do app (tópicos +
@@ -25,7 +23,7 @@ Using Azure Databricks**.
 ---
 
 ## Percurso 1 — Set up and configure environment
-**5 módulos · meta: 08/07/2026**
+**5 módulos · meta: 08/07/2026 · peso no exame: 15–20%**
 
 - [ ] 1. Explorar o Azure Databricks (workspace, conceitos, lakehouse)
 - [ ] 2. Provisionar e configurar workspaces
@@ -34,7 +32,7 @@ Using Azure Databricks**.
 - [ ] 5. Introdução ao Apache Spark no Azure Databricks
 
 ## Percurso 2 — Prepare and process data
-**4 módulos · meta: 05/08/2026**
+**4 módulos · meta: 05/08/2026 · peso no exame: 30–35%**
 
 - [ ] 6. Processar dados com Apache Spark (DataFrames e transformações)
 - [ ] 7. Gerenciar dados com Delta Lake
@@ -42,7 +40,7 @@ Using Azure Databricks**.
 - [ ] 9. Construir pipelines declarativos (Delta Live Tables / Lakeflow)
 
 ## Percurso 3 — Deploy and maintain data pipelines and workloads
-**4 módulos · meta: 19/08/2026**
+**4 módulos · meta: 19/08/2026 · peso no exame: 30–35%**
 
 - [ ] 10. Orquestrar workloads com Databricks Workflows / Jobs
 - [ ] 11. CI/CD com Databricks Asset Bundles
@@ -50,7 +48,7 @@ Using Azure Databricks**.
 - [ ] 13. Otimização de performance e custo (Photon, particionamento, Z-order)
 
 ## Percurso 4 — Secure and govern Unity Catalog objects
-**2 módulos · meta: 26/08/2026**
+**2 módulos · meta: 26/08/2026 · peso no exame: 15–20%**
 
 - [ ] 14. Implementar governança de dados com Unity Catalog
 - [ ] 15. Proteger e auditar objetos do Unity Catalog (permissões e linhagem)
