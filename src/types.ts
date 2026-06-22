@@ -32,3 +32,13 @@ export interface Badge {
   titulo: string
   descricao: string
 }
+
+/** Conteúdo de apoio de um módulo, derivado do guia oficial DP-750. */
+export interface GuiaModulo {
+  /** Habilidades medidas (guia oficial) mapeadas a este módulo. */
+  topicos: string[]
+  /** URL da doc oficial do Azure Databricks (validada). */
+  learnUrl: string
+  /** Rótulo curto do destino no Microsoft Learn. */
+  learnLabel: string
+}
