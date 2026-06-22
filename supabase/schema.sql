@@ -1,9 +1,12 @@
 -- DeltaQuest — schema de sincronização (Supabase)
 -- Rode este SQL no SQL Editor do seu projeto Supabase.
 --
--- Depois, em Authentication > URL Configuration, garanta que "Site URL" e as
--- "Redirect URLs" incluem a origem do app (ex.: http://localhost:5173 em dev
--- e a URL de produção na Vercel) — necessário para o magic link redirecionar de volta.
+-- Autenticação: o app usa login por e-mail e senha (Supabase Auth, signInWithPassword).
+-- Em Authentication > Providers, mantenha o provedor "Email" habilitado.
+-- A opção "Confirm email" decide se é preciso confirmar o e-mail antes do 1º login:
+--   - desativada -> entra direto após criar a conta (mais simples para uso pessoal);
+--   - ativada    -> configure "Site URL" e "Redirect URLs" (ex.: http://localhost:5173
+--                   e a URL de produção na Vercel) para o link de confirmação voltar ao app.
 
 create table if not exists public.progress (
   user_id    uuid primary key references auth.users (id) on delete cascade,
