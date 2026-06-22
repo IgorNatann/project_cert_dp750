@@ -1,6 +1,8 @@
 node_modules
 dist
 dist-ssr
+dev-dist
+.vite
 *.local
 
 # Variáveis de ambiente (Supabase, etc.) — nunca commitar
