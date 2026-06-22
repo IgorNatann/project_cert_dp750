@@ -76,11 +76,12 @@ Estas decisões são deliberadas e devem ser respeitadas — não são acidentes
 Os dados do domínio são **fixos e conhecidos** — modele-os como seed/constantes, não como
 entrada do usuário:
 
-- **Trilha = 15 módulos em 4 percursos**, com nomes reais e metas de data:
-  1. *Set up and configure environment* — 5 módulos, meta **08/07**
-  2. *Prepare and process data* — 4 módulos, meta **05/08**
-  3. *Deploy and maintain data pipelines and workloads* — 4 módulos, meta **19/08**
-  4. *Secure and govern Unity Catalog objects* — 2 módulos, meta **26/08**
+- **Trilha = 15 módulos em 4 percursos**, com nomes reais, metas de data e peso no exame
+  (do guia oficial — note que o nº de módulos não acompanha o peso):
+  1. *Set up and configure environment* — 5 módulos, meta **08/07** · peso **15–20%**
+  2. *Prepare and process data* — 4 módulos, meta **05/08** · peso **30–35%**
+  3. *Deploy and maintain data pipelines and workloads* — 4 módulos, meta **19/08** · peso **30–35%**
+  4. *Secure and govern Unity Catalog objects* — 2 módulos, meta **26/08** · peso **15–20%**
 - **Fase de simulados**: 5 tarefas, meta **09/09**. **Revisão final**: 4 tarefas (semana 13).
 - **Datas-chave**: início do estudo **22/06/2026**; exame **14/09/2026** (alvo da contagem
   regressiva).
@@ -97,8 +98,8 @@ entrada do usuário:
 
 > A fonte canônica do conteúdo da trilha é `.llm/PRD/04_checklist_progresso.md` (títulos
 > dos 15 módulos, tarefas de simulado e de revisão). Use-a como *seed* do app. Os títulos
-> dos módulos ali são uma reconstrução de melhor esforço — confirme-os com o candidato
-> antes de tratá-los como definitivos; percursos, contagens e datas-meta já são fiéis ao PRD.
+> dos módulos foram **confirmados pelo candidato (22/06/2026)** e são definitivos; percursos,
+> contagens, datas-meta e pesos de exame seguem fiéis ao guia oficial DP-750 e ao PRD.
 >
 > A **matéria de apoio** oficial (habilidades medidas do [guia DP-750](https://learn.microsoft.com/pt-br/credentials/certifications/resources/study-guides/dp-750))
 > está mapeada por módulo em `src/data/guia.ts` e exibida em cada card como tópicos

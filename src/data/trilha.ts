@@ -13,24 +13,28 @@ export const PERCURSOS: Percurso[] = [
     id: 'p1',
     nome: 'Set up and configure environment',
     meta: '2026-07-08',
+    pesoExame: '15–20%',
     moduloIds: ['m1', 'm2', 'm3', 'm4', 'm5'],
   },
   {
     id: 'p2',
     nome: 'Prepare and process data',
     meta: '2026-08-05',
+    pesoExame: '30–35%',
     moduloIds: ['m6', 'm7', 'm8', 'm9'],
   },
   {
     id: 'p3',
     nome: 'Deploy and maintain data pipelines and workloads',
     meta: '2026-08-19',
+    pesoExame: '30–35%',
     moduloIds: ['m10', 'm11', 'm12', 'm13'],
   },
   {
     id: 'p4',
     nome: 'Secure and govern Unity Catalog objects',
     meta: '2026-08-26',
+    pesoExame: '15–20%',
     moduloIds: ['m14', 'm15'],
   },
 ]
