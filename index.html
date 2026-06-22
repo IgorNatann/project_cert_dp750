@@ -7,8 +7,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0d1117" />
     <title>DeltaQuest — DP-750</title>
+    <!-- Tela de abertura: aparece instantânea (antes do bundle) e some quando o app monta.
+         O delta âmbar se "desenha" como código sendo compilado. Respeita reduce-motion. -->
+    <style>
+      #dq-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.1rem;
+        background: #0d1117;
+        transition: opacity 0.4s ease;
+        font-family: ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+      }
+      #dq-splash.dq-hide {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #dq-splash svg {
+        width: 92px;
+        height: 92px;
+      }
+      #dq-splash path {
+        stroke-dasharray: 70;
+        stroke-dashoffset: 70;
+        animation: dq-draw 0.7s ease-out forwards;
+      }
+      #dq-splash .dq-word {
+        font-size: 1.05rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        opacity: 0;
+        animation: dq-word 0.4s ease-out 0.45s forwards;
+      }
+      #dq-splash .dq-word .d {
+        color: #3fb950;
+      }
+      #dq-splash .dq-word .q {
+        color: #f0b429;
+      }
+      @keyframes dq-draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+      @keyframes dq-word {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #dq-splash {
+          transition: none;
+        }
+        #dq-splash path {
+          animation: none;
+          stroke-dashoffset: 0;
+        }
+        #dq-splash .dq-word {
+          animation: none;
+          opacity: 1;
+        }
+      }
+    </style>
   </head>
   <body>
+    <div id="dq-splash" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M16 6 L27 26 H5 Z"
+          stroke="#f0b429"
+          stroke-width="2.5"
+          stroke-linejoin="round"
+          stroke-linecap="round"
+        />
+      </svg>
+      <div class="dq-word"><span class="d">Delta</span><span class="q">Quest</span></div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

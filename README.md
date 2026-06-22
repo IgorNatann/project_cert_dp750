@@ -20,7 +20,8 @@ sustentar a motivação e a consistência, não só registrar progresso. App de 
 - **Ofensiva inteligente**: conta apenas os *dias de estudo planejados* (folga não quebra a
   sequência) e tem um "freeze" de tolerância.
 - **Registro de simulados** com histórico e **mini-gráfico (sparkline)** de evolução das notas.
-- **Microinterações**: toasts de level-up e de badge, glow ao desbloquear, countdown pulsando.
+- **Microinterações**: tela de abertura (logo se desenhando), toasts de level-up e de badge,
+  glow ao desbloquear, countdown pulsando.
 - **Matéria de apoio por módulo**: tópicos do guia oficial DP-750 (habilidades medidas) e link
   para o Microsoft Learn, em cada card da trilha.
 - **Sincronização opcional na nuvem** (Supabase): com login leve, o mesmo progresso acompanha
