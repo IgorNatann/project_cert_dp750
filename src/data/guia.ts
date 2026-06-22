@@ -1,191 +1,181 @@
 import type { GuiaModulo } from '../types'
 
 /**
- * Matéria de apoio por módulo, mapeada a partir do guia de estudo oficial do
- * exame DP-750 (habilidades medidas a partir de 11/03/2026).
- * Fonte: https://learn.microsoft.com/pt-br/credentials/certifications/resources/study-guides/dp-750
+ * Matéria de apoio por módulo, alinhada ao curso oficial DP-750T00 (4 learning paths,
+ * 15 módulos): https://learn.microsoft.com/en-us/training/courses/dp-750t00
  *
- * As `topicos` são as habilidades medidas oficiais redistribuídas para o módulo
- * mais próximo da trilha. Os `learnUrl` apontam para a doc canônica do Azure
- * Databricks (todas validadas como existentes). Conteúdo de referência fixo —
- * tratado como seed/constante, não como entrada do usuário.
+ * Cada entrada traz o título oficial (inglês), os tópicos cobertos pelo módulo e o link
+ * direto para a aula no Microsoft Learn (todas as URLs validadas). Conteúdo de referência
+ * fixo — seed/constante, não entrada do usuário.
  *
- * Pesos do exame por domínio (para contexto de prioridade):
+ * Pesos do exame por domínio (contexto de prioridade):
  *  • Configurar ambiente (m1–m5) ........ 15–20%
  *  • Preparar e processar (m6–m9) ....... 30–35%
  *  • Implantar e manter (m10–m13) ....... 30–35%
  *  • Proteger e governar UC (m14–m15) ... 15–20%
  */
+const MOD = 'https://learn.microsoft.com/en-us/training/modules/'
+
 export const GUIA: Record<string, GuiaModulo> = {
-  // ── Percurso 1 — Configurar e ajustar o ambiente (15–20%) ──
+  // ── Percurso 1 — Set up and configure environment (15–20%) ──
   m1: {
+    tituloOficial: 'Explore Azure Databricks',
     topicos: [
-      'Arquitetura lakehouse e o papel do Delta Lake como formato padrão',
-      'Componentes do workspace: notebooks, compute, catálogo e workflows',
-      'Planos do Azure Databricks (control plane × compute plane)',
-      'Integração com Microsoft Entra, ADLS e Azure Monitor',
+      'Azure Databricks como plataforma de analytics sobre Apache Spark',
+      'Workspace, notebooks e o ecossistema do Databricks',
+      'Conceito de lakehouse e o papel do Delta Lake',
+      'Cargas de trabalho: engenharia de dados, analytics e IA',
     ],
-    learnUrl: 'https://learn.microsoft.com/pt-br/azure/databricks/introduction/',
-    learnLabel: 'O que é o Azure Databricks',
+    learnUrl: `${MOD}explore-azure-databricks/`,
   },
   m2: {
+    tituloOficial: 'Understand Azure Databricks architecture',
     topicos: [
-      'Provisionar o workspace e integrar identidades via Microsoft Entra',
-      'Configurar permissões de acesso a recursos do workspace',
-      'Convenções de nomenclatura por isolamento e ambiente (dev/prod)',
-      'Administração de conta e de workspace',
+      'Separação entre control plane e compute plane',
+      'Hierarquia da conta (account, workspaces, metastore)',
+      'Compute serverless × clássico',
+      'Armazenamento: default, externo e gerenciado pelo Unity Catalog',
     ],
-    learnUrl: 'https://learn.microsoft.com/pt-br/azure/databricks/admin/',
-    learnLabel: 'Administração',
+    learnUrl: `${MOD}understand-azure-databricks-architecture/`,
   },
   m3: {
+    tituloOficial: 'Understand Azure Databricks integrations',
     topicos: [
-      'Escolher o tipo de computação: job, serverless, SQL warehouse, clássica e compartilhada',
-      'Ajustar desempenho: CPU, nº de nós, autoescala, término, tipo de nó, tamanho e pool',
-      'Configurar recursos: aceleração Photon, versão do runtime/Spark e ML',
-      'Instalar bibliotecas no recurso de computação',
-      'Configurar permissões de acesso à computação',
+      'Integração com Microsoft Fabric e Power BI',
+      'Visual Studio Code e ferramentas de desenvolvimento',
+      'Power Platform e Copilot Studio',
+      'Microsoft Purview e Microsoft Foundry',
     ],
-    learnUrl: 'https://learn.microsoft.com/pt-br/azure/databricks/compute/',
-    learnLabel: 'Computação',
+    learnUrl: `${MOD}understand-azure-databricks-integrations/`,
   },
   m4: {
+    tituloOficial: 'Select and configure compute',
     topicos: [
-      'Trabalhar com notebooks no workspace',
-      'Git folders (Repos): versionar com Git, branches e pull requests',
-      'Databricks CLI e APIs REST para automação',
-      'Boas práticas de controle de versão (base do SDLC)',
+      'Escolher o tipo de computação: serverless × clássico, job e warehouse',
+      'Ajustar desempenho: nº de nós, autoescala, término e pools',
+      'Instalar bibliotecas no recurso de computação',
+      'Permissões de acesso e otimização de custo',
     ],
-    learnUrl: 'https://learn.microsoft.com/pt-br/azure/databricks/notebooks/',
-    learnLabel: 'Notebooks',
+    learnUrl: `${MOD}select-and-configure-compute/`,
   },
   m5: {
+    tituloOficial: 'Create and organize objects in Unity Catalog',
     topicos: [
-      'Arquitetura do Spark: driver, executores e particionamento',
-      'DataFrames e Spark SQL: transformações × ações (lazy evaluation)',
-      'Apache Spark no Databricks Runtime',
-      'Noções de DAG e execução distribuída',
+      'Namespace de três níveis: catálogos, esquemas e objetos',
+      'Criar catálogos para isolamento por ambiente',
+      'Tabelas, views e volumes (estruturados e não estruturados)',
+      'Catálogos estrangeiros (foreign catalogs) e conexões',
+      'Convenções de nomenclatura e instruções do Genie (IA/BI)',
     ],
-    learnUrl: 'https://learn.microsoft.com/pt-br/azure/databricks/spark/',
-    learnLabel: 'Apache Spark',
+    learnUrl: `${MOD}create-and-organize-objects-in-unity-catalog/`,
   },
 
-  // ── Percurso 2 — Preparar e processar dados (30–35%) ──
+  // ── Percurso 2 — Prepare and process data (30–35%) ──
   m6: {
+    tituloOficial: 'Design and implement data modeling',
     topicos: [
-      'Criar e carregar DataFrames; escolher tipos de coluna apropriados',
-      'Filtrar, agrupar e agregar dados',
-      'Combinar com join, union, intersect e except',
-      'Desnormalizar, pivotar e despivotar',
-      'Tratar duplicados, ausentes e nulos; profiling de dados',
-      'Carregar com merge, insert e append',
+      'Projetar a lógica de ingestão e configurar a fonte de dados',
+      'Escolher ferramenta de ingestão e formato de tabela',
+      'Esquemas de particionamento',
+      'Dimensões de mudança lenta (SCD) e granularidade',
+      'Estratégias de clustering para desempenho',
     ],
-    learnUrl: 'https://learn.microsoft.com/pt-br/azure/databricks/getting-started/dataframes',
-    learnLabel: 'DataFrames do Spark',
+    learnUrl: `${MOD}design-implement-data-modeling-unity-catalog/`,
   },
   m7: {
+    tituloOficial: 'Ingest data into Unity Catalog',
     topicos: [
-      'Tabelas Delta: gerenciadas × externas; formato padrão do lakehouse',
-      'Upsert com MERGE; histórico e time travel',
-      'Liquid clustering, Z-order e deletion vectors',
-      'Imposição e evolução de esquema',
-      'Dimensões de mudança lenta (SCD) e tabelas temporais',
+      'Conectores gerenciados com Lakeflow Connect',
+      'Ingestão por notebooks e por SQL (COPY INTO, CTAS)',
+      'Captura de mudanças (CDC feed)',
+      'Streaming a partir de barramentos de mensagens',
+      'Auto Loader e Lakeflow Spark Declarative Pipelines',
     ],
-    learnUrl: 'https://learn.microsoft.com/pt-br/azure/databricks/delta/',
-    learnLabel: 'Delta Lake',
+    learnUrl: `${MOD}ingest-data-into-unity-catalog/`,
   },
   m8: {
+    tituloOficial: 'Cleanse, transform, and load data',
     topicos: [
-      'Auto Loader: ingestão incremental de arquivos do armazenamento de objetos',
-      'Structured Streaming: tabelas como fontes e destinos de streaming',
-      'Ingerir de Azure Event Hubs e outros barramentos de mensagens',
-      'Captura de mudanças (CDC feed)',
-      'COPY INTO e CREATE STREAMING TABLE',
-      'Lote × streaming e modos de gatilho',
+      'Profiling e escolha de tipos de coluna',
+      'Resolver duplicados e valores nulos',
+      'Filtrar, agregar, joins e operadores de conjunto',
+      'Pivotar e desnormalizar dados',
+      'Carregar com append, overwrite e merge',
     ],
-    learnUrl: 'https://learn.microsoft.com/pt-br/azure/databricks/structured-streaming/concepts',
-    learnLabel: 'Structured Streaming',
+    learnUrl: `${MOD}cleanse-transform-load-data-into-unity-catalog/`,
   },
   m9: {
+    tituloOficial: 'Implement and manage data quality constraints',
     topicos: [
-      'Lakeflow Spark Declarative Pipelines: tabelas de streaming e views materializadas',
-      'Definir transformações declarativas em Python/SQL',
-      'Expectations: gerenciar a qualidade de dados no pipeline',
-      'Validações: nulidade, cardinalidade, intervalo e tipo',
-      'Modos de pipeline: acionado (lote) × contínuo (streaming)',
+      'Verificações de validação (nulidade, cardinalidade, intervalo)',
+      'Imposição de esquema e gestão de schema drift',
+      'Expectations em Lakeflow Spark Declarative Pipelines',
+      'Garantir integridade ao longo do pipeline',
     ],
-    learnUrl: 'https://learn.microsoft.com/pt-br/azure/databricks/ldp/',
-    learnLabel: 'Lakeflow Declarative Pipelines',
+    learnUrl: `${MOD}implement-manage-data-quality-constraints-unity-catalog/`,
   },
 
-  // ── Percurso 3 — Implantar e manter pipelines e cargas (30–35%) ──
+  // ── Percurso 3 — Deploy and maintain data pipelines and workloads (30–35%) ──
   m10: {
+    tituloOficial: 'Design and implement data pipelines',
     topicos: [
-      'Lakeflow Jobs: tarefas, dependências e ordem de operações (DAG)',
-      'Configurar gatilhos (tempo/evento) e agendar execuções',
-      'Configurar alertas e notificações de trabalho',
-      'Reinicializações automáticas de tarefa/pipeline',
-      'Tratamento de erros e lógica condicional (if/else, for each)',
+      'Pipelines com notebooks e Lakeflow Spark Declarative Pipelines',
+      'Definir a ordem de operações e a lógica das tarefas',
+      'Tratamento de erros no pipeline',
+      'Orquestrar transformações de ponta a ponta',
     ],
-    learnUrl: 'https://learn.microsoft.com/pt-br/azure/databricks/jobs/',
-    learnLabel: 'Lakeflow Jobs',
+    learnUrl: `${MOD}design-implement-data-pipelines/`,
   },
   m11: {
+    tituloOficial: 'Implement Lakeflow Jobs',
     topicos: [
-      'Asset Bundles (Pacotes de Automação Declarativa): definir recursos via YAML',
-      'Configurar, validar e empacotar bundles',
-      'Implantar via CLI do Databricks e APIs REST',
-      'Git: branching, pull requests e resolução de conflitos',
-      'Estratégia de testes: unitário, integração, ponta a ponta e UAT',
+      'Criar jobs e configurar tarefas',
+      'Configurar gatilhos e agendamento',
+      'Alertas e notificações de execução',
+      'Reinicializações automáticas',
     ],
-    learnUrl: 'https://learn.microsoft.com/pt-br/azure/databricks/dev-tools/bundles/',
-    learnLabel: 'Asset Bundles',
+    learnUrl: `${MOD}implement-lakeflow-jobs/`,
   },
   m12: {
+    tituloOficial: 'Implement development lifecycle processes',
     topicos: [
-      'Monitorar consumo de cluster para desempenho e custo',
-      'Solucionar problemas em Lakeflow Jobs: reparar, reiniciar, parar e reexecutar',
-      'Investigar cache, distorção (skew), vazamento (spill) e embaralhamento (shuffle) via DAG, Spark UI e perfil de consulta',
-      'Ajustar notebooks e jobs Spark; resolver gargalos de recursos',
-      'Log streaming com Log Analytics no Azure Monitor; configurar alertas',
+      'Git folders: versionamento, branches e pull requests',
+      'Estratégias de teste (unitário, integração, e2e, UAT)',
+      'Declarative Automation Bundles (Asset Bundles)',
+      'Deploy entre ambientes via CLI do Databricks',
     ],
-    learnUrl: 'https://learn.microsoft.com/pt-br/azure/databricks/optimizations/',
-    learnLabel: 'Otimização e desempenho',
+    learnUrl: `${MOD}implement-development-lifecycle-processes-in-azure-databricks/`,
   },
   m13: {
+    tituloOficial: 'Monitor, troubleshoot and optimize workloads',
     topicos: [
-      'OPTIMIZE: compactar arquivos e melhorar o layout dos dados',
-      'VACUUM: remover arquivos de dados não referenciados',
-      'Particionamento, Z-order e clustering líquido',
-      'Aceleração Photon e otimização preditiva',
-      'Equilibrar desempenho × custo',
+      'Métricas de consumo de cluster (desempenho × custo)',
+      'Troubleshooting de Lakeflow Jobs e de jobs Spark',
+      'Cache, skew, spill e shuffle (DAG, Spark UI, query profile)',
+      'Otimização (OPTIMIZE/VACUUM) e log streaming no Azure Monitor',
     ],
-    learnUrl: 'https://learn.microsoft.com/pt-br/azure/databricks/delta/optimize',
-    learnLabel: 'Otimizar layout de dados',
+    learnUrl: `${MOD}monitor-troubleshoot-optimize-workloads-azure-databricks/`,
   },
 
-  // ── Percurso 4 — Proteger e governar objetos do Unity Catalog (15–20%) ──
+  // ── Percurso 4 — Secure and govern Unity Catalog objects (15–20%) ──
   m14: {
+    tituloOficial: 'Secure Unity Catalog objects',
     topicos: [
-      'Organizar objetos: catálogos, esquemas, volumes, tabelas e views',
-      'DDL em tabelas gerenciadas e externas; catálogo estrangeiro (foreign catalog)',
-      'Convenções de nomenclatura por isolamento, ambiente e compartilhamento externo',
-      'Descoberta de dados: descrições, tags e instruções do Genie (IA/BI)',
-      'Linhagem no Catalog Explorer (proprietário, histórico, dependências)',
-      'ABAC com tags e políticas; retenção de dados; Delta Sharing',
+      'Controle de acesso por tabela e esquema; permissões granulares',
+      'Filtros de linha e máscaras de coluna',
+      'Acessar segredos do Azure Key Vault',
+      'Autenticar com service principals e managed identities',
     ],
-    learnUrl: 'https://learn.microsoft.com/pt-br/azure/databricks/data-governance/unity-catalog/',
-    learnLabel: 'Unity Catalog',
+    learnUrl: `${MOD}secure-unity-catalog-objects/`,
   },
   m15: {
+    tituloOficial: 'Govern Unity Catalog objects',
     topicos: [
-      'Conceder privilégios a usuários, grupos e service principals',
-      'Controle de acesso por tabela, coluna e linha (row-level security)',
-      'Filtros de linha e máscaras de coluna',
-      'Segredos do Azure Key Vault; service principals e managed identities',
+      'Linhagem de dados (data lineage)',
       'Configurar logs de auditoria',
+      'ABAC: controle de acesso baseado em atributo com tags',
+      'Compartilhamento seguro com Delta Sharing',
     ],
-    learnUrl: 'https://learn.microsoft.com/pt-br/azure/databricks/security/',
-    learnLabel: 'Segurança e conformidade',
+    learnUrl: `${MOD}govern-unity-catalog-objects/`,
   },
 }

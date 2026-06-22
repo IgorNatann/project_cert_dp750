@@ -5,12 +5,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Estado atual
 
 **MVP + v1.1 + v1.2 + sync na nuvem + deploy + PWA concluídos** e validados (`npm run build`,
-`typecheck`, `lint` e `test` ok — 28 testes): dashboard, checklist gamificado (15 módulos +
+`typecheck`, `lint` e `test` ok — 29 testes): dashboard, checklist gamificado (15 módulos +
 simulados + revisão), XP/níveis, badges, ofensiva, contagem regressiva, **registro de
 simulados com sparkline** (F6), **microinterações** (toasts de level-up/badge, glow,
 countdown pulsando — F10), **sync Supabase com login leve** (F7), **matéria de apoio por
-módulo** a partir do guia oficial DP-750 (`src/data/guia.ts`), **selo de peso do exame por
-percurso** e **PWA instalável/offline** (F8). Tudo persiste em `localStorage` (offline-first)
+módulo alinhada ao curso oficial DP-750T00** com link das aulas (`src/data/guia.ts`), **selo
+de peso do exame por percurso** e **PWA instalável/offline** (F8). Tudo persiste em `localStorage` (offline-first)
 e sincroniza quando há login + Supabase configurado.
 
 **Em produção:** deploy automático na Vercel a cada merge na `main` (F9) →
@@ -101,15 +101,15 @@ entrada do usuário:
   (dias corridos) é um bug de produto.
 
 > A fonte canônica do conteúdo da trilha é `.llm/PRD/04_checklist_progresso.md` (títulos
-> dos 15 módulos, tarefas de simulado e de revisão). Use-a como *seed* do app. Os títulos
-> dos módulos foram **confirmados pelo candidato (22/06/2026)** e são definitivos; percursos,
-> contagens, datas-meta e pesos de exame seguem fiéis ao guia oficial DP-750 e ao PRD.
+> dos 15 módulos, tarefas de simulado e de revisão). Use-a como *seed* do app. Os 15 módulos
+> estão **alinhados ao curso oficial DP-750T00** (4 learning paths × 5/4/4/2 = 15 módulos) —
+> título em PT no app + título oficial em inglês; percursos, contagens, datas-meta e pesos
+> seguem fiéis ao curso e ao PRD.
 >
-> A **matéria de apoio** oficial (habilidades medidas do [guia DP-750](https://learn.microsoft.com/pt-br/credentials/certifications/resources/study-guides/dp-750))
-> está mapeada por módulo em `src/data/guia.ts` e exibida em cada card como tópicos
-> expansíveis + link do Microsoft Learn (todas as URLs validadas). O guia oficial se organiza
-> por **4 domínios com peso de exame** (15-20% / 30-35% / 30-35% / 15-20%), não pelos 15
-> módulos — o mapeamento aloca cada habilidade ao módulo mais próximo da trilha.
+> A **matéria de apoio** vive em `src/data/guia.ts` (keyed por id do módulo): `tituloOficial`
+> (inglês), `topicos` e `learnUrl` — link direto para a **aula** no Microsoft Learn. O
+> **learning path** de cada percurso está em `src/data/trilha.ts` (`learnPathUrl`). Curso
+> completo: https://learn.microsoft.com/en-us/training/courses/dp-750t00 (todas as URLs validadas).
 
 ## Direção visual
 

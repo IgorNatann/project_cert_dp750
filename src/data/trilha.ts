@@ -7,13 +7,17 @@ export const DATAS = {
   simulados: '2026-09-09',
 } as const
 
-// Fonte: .llm/PRD/04_checklist_progresso.md
+// Estrutura alinhada ao curso oficial DP-750T00 (4 learning paths, 15 módulos):
+// https://learn.microsoft.com/en-us/training/courses/dp-750t00
+const LEARN = 'https://learn.microsoft.com/en-us/training/paths/'
+
 export const PERCURSOS: Percurso[] = [
   {
     id: 'p1',
     nome: 'Set up and configure environment',
     meta: '2026-07-08',
     pesoExame: '15–20%',
+    learnPathUrl: `${LEARN}azure-databricks-data-engineer-set-up-configure-environment/`,
     moduloIds: ['m1', 'm2', 'm3', 'm4', 'm5'],
   },
   {
@@ -21,6 +25,7 @@ export const PERCURSOS: Percurso[] = [
     nome: 'Prepare and process data',
     meta: '2026-08-05',
     pesoExame: '30–35%',
+    learnPathUrl: `${LEARN}azure-databricks-data-engineer-prepare-process-data/`,
     moduloIds: ['m6', 'm7', 'm8', 'm9'],
   },
   {
@@ -28,6 +33,7 @@ export const PERCURSOS: Percurso[] = [
     nome: 'Deploy and maintain data pipelines and workloads',
     meta: '2026-08-19',
     pesoExame: '30–35%',
+    learnPathUrl: `${LEARN}azure-databricks-data-engineer-deploy-maintain-data-pipelines-workloads/`,
     moduloIds: ['m10', 'm11', 'm12', 'm13'],
   },
   {
@@ -35,29 +41,44 @@ export const PERCURSOS: Percurso[] = [
     nome: 'Secure and govern Unity Catalog objects',
     meta: '2026-08-26',
     pesoExame: '15–20%',
+    learnPathUrl: `${LEARN}azure-databricks-data-engineer-secure-govern-unity-catalog/`,
     moduloIds: ['m14', 'm15'],
   },
 ]
 
+// Títulos em PT (fiéis aos módulos oficiais do curso); o título oficial em inglês
+// e o link da aula vivem em `src/data/guia.ts`.
 export const MODULOS: Modulo[] = [
-  { id: 'm1', percursoId: 'p1', titulo: 'Explorar o Azure Databricks (workspace, lakehouse)' },
-  { id: 'm2', percursoId: 'p1', titulo: 'Provisionar e configurar workspaces' },
-  { id: 'm3', percursoId: 'p1', titulo: 'Configurar compute: clusters, pools e SQL warehouses' },
-  { id: 'm4', percursoId: 'p1', titulo: 'Notebooks, Git folders (Repos) e CLI/APIs' },
-  { id: 'm5', percursoId: 'p1', titulo: 'Introdução ao Apache Spark no Azure Databricks' },
+  { id: 'm1', percursoId: 'p1', titulo: 'Explorar o Azure Databricks' },
+  { id: 'm2', percursoId: 'p1', titulo: 'Entender a arquitetura do Azure Databricks' },
+  { id: 'm3', percursoId: 'p1', titulo: 'Entender as integrações do Azure Databricks' },
+  { id: 'm4', percursoId: 'p1', titulo: 'Selecionar e configurar a computação' },
+  { id: 'm5', percursoId: 'p1', titulo: 'Criar e organizar objetos no Unity Catalog' },
 
-  { id: 'm6', percursoId: 'p2', titulo: 'Processar dados com Apache Spark (DataFrames)' },
-  { id: 'm7', percursoId: 'p2', titulo: 'Gerenciar dados com Delta Lake' },
-  { id: 'm8', percursoId: 'p2', titulo: 'Ingestão incremental: Auto Loader e Structured Streaming' },
-  { id: 'm9', percursoId: 'p2', titulo: 'Pipelines declarativos (Delta Live Tables / Lakeflow)' },
+  { id: 'm6', percursoId: 'p2', titulo: 'Projetar e implementar modelagem de dados' },
+  { id: 'm7', percursoId: 'p2', titulo: 'Ingerir dados no Unity Catalog' },
+  { id: 'm8', percursoId: 'p2', titulo: 'Limpar, transformar e carregar dados' },
+  {
+    id: 'm9',
+    percursoId: 'p2',
+    titulo: 'Implementar e gerenciar restrições de qualidade de dados',
+  },
 
-  { id: 'm10', percursoId: 'p3', titulo: 'Orquestrar workloads com Workflows / Jobs' },
-  { id: 'm11', percursoId: 'p3', titulo: 'CI/CD com Databricks Asset Bundles' },
-  { id: 'm12', percursoId: 'p3', titulo: 'Monitorar e fazer troubleshooting de pipelines' },
-  { id: 'm13', percursoId: 'p3', titulo: 'Performance e custo (Photon, particionamento, Z-order)' },
+  { id: 'm10', percursoId: 'p3', titulo: 'Projetar e implementar pipelines de dados' },
+  { id: 'm11', percursoId: 'p3', titulo: 'Implementar Lakeflow Jobs' },
+  {
+    id: 'm12',
+    percursoId: 'p3',
+    titulo: 'Implementar processos do ciclo de vida de desenvolvimento',
+  },
+  {
+    id: 'm13',
+    percursoId: 'p3',
+    titulo: 'Monitorar, solucionar problemas e otimizar cargas de trabalho',
+  },
 
-  { id: 'm14', percursoId: 'p4', titulo: 'Governança de dados com Unity Catalog' },
-  { id: 'm15', percursoId: 'p4', titulo: 'Proteger e auditar objetos do Unity Catalog' },
+  { id: 'm14', percursoId: 'p4', titulo: 'Proteger objetos do Unity Catalog' },
+  { id: 'm15', percursoId: 'p4', titulo: 'Governar objetos do Unity Catalog' },
 ]
 
 export const TAREFAS_SIMULADO: Tarefa[] = [

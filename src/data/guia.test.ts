@@ -17,16 +17,16 @@ describe('guia de matéria de apoio', () => {
     }
   })
 
-  it('cada módulo tem tópicos e rótulo não vazios', () => {
+  it('cada módulo tem título oficial e tópicos não vazios', () => {
     for (const [id, g] of Object.entries(GUIA)) {
       expect(g.topicos.length, `módulo ${id} sem tópicos`).toBeGreaterThan(0)
       expect(g.topicos.every((t) => t.trim().length > 0)).toBe(true)
-      expect(g.learnLabel.trim().length, `módulo ${id} sem rótulo`).toBeGreaterThan(0)
+      expect(g.tituloOficial.trim().length, `módulo ${id} sem título oficial`).toBeGreaterThan(0)
     }
   })
 
-  it('aponta para a doc oficial do Azure Databricks em pt-br', () => {
-    const prefixo = 'https://learn.microsoft.com/pt-br/azure/databricks/'
+  it('aponta para a aula (módulo de treinamento) no Microsoft Learn', () => {
+    const prefixo = 'https://learn.microsoft.com/en-us/training/modules/'
     for (const [id, g] of Object.entries(GUIA)) {
       expect(g.learnUrl.startsWith(prefixo), `learnUrl inesperada em ${id}: ${g.learnUrl}`).toBe(
         true,
