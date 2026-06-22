@@ -4,19 +4,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Estado atual
 
-**MVP + v1.1 + v1.2 + sync na nuvem + deploy concluídos** e validados (`npm run build`,
-`typecheck`, `lint` e `test` ok — 25 testes): dashboard, checklist gamificado (15 módulos +
+**MVP + v1.1 + v1.2 + sync na nuvem + deploy + PWA concluídos** e validados (`npm run build`,
+`typecheck`, `lint` e `test` ok — 28 testes): dashboard, checklist gamificado (15 módulos +
 simulados + revisão), XP/níveis, badges, ofensiva, contagem regressiva, **registro de
 simulados com sparkline** (F6), **microinterações** (toasts de level-up/badge, glow,
-countdown pulsando — F10), **sync Supabase com login leve** (F7) e **matéria de apoio por
-módulo** a partir do guia oficial DP-750 (`src/data/guia.ts`). Tudo persiste em `localStorage`
-(offline-first) e sincroniza quando há login + Supabase configurado.
+countdown pulsando — F10), **sync Supabase com login leve** (F7), **matéria de apoio por
+módulo** a partir do guia oficial DP-750 (`src/data/guia.ts`), **selo de peso do exame por
+percurso** e **PWA instalável/offline** (F8). Tudo persiste em `localStorage` (offline-first)
+e sincroniza quando há login + Supabase configurado.
 
 **Em produção:** deploy automático na Vercel a cada merge na `main` (F9) →
 https://deltaquest.vercel.app (projeto `deltaquest`).
 
-**Pendente:** **F8 PWA** (instalável/offline via `vite-plugin-pwa` — ainda não há plugin,
-manifest nem service worker) e extras (export/import de progresso em JSON).
+**PWA (F8):** `vite-plugin-pwa` com `registerType: 'autoUpdate'` e precache do app shell;
+ícones gerados por `npx pwa-assets-generator` (config em `pwa-assets.config.ts`) a partir de
+`public/favicon.svg`. O service worker só roda em `build`/`preview`, não em `dev`.
+
+**Pendente:** apenas extras — export/import de progresso em JSON.
 Backlog completo: `C:\Users\Igorn\.claude\plans\keen-discovering-rose.md`.
 
 Documentos-fonte:
@@ -33,13 +37,13 @@ Documentos-fonte:
 - **Sync entre dispositivos:** Supabase (Postgres + Auth). Login leve de **um único usuário**
   para ler/gravar o mesmo progresso no PC e no celular; RLS protege a linha do usuário.
   Estratégia **last-write-wins** (suficiente para 1 usuário).
-- **Offline / instalável:** PWA via `vite-plugin-pwa` *(planejado — ainda não implementado)*.
+- **Offline / instalável:** PWA via `vite-plugin-pwa` (manifest + service worker, autoUpdate).
 - **Hospedagem:** Vercel (build estático, deploy no `git push`). **Sem servidor próprio / sem Render.**
 
 **Ordem de construção:** (A) MVP local-first com localStorage ✅ → (B) camada de sync
-Supabase ✅ → (C) deploy na Vercel ✅. Falta a camada PWA (instalável/offline). A fase B usa
-as credenciais do Supabase em `.env`: `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` — sem
-elas o cliente Supabase fica `null`, o sync vira no-op e o app roda 100% local.
+Supabase ✅ → (C) deploy na Vercel ✅ → (D) PWA instalável/offline ✅. A fase B usa as
+credenciais do Supabase em `.env`: `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` — sem elas o
+cliente Supabase fica `null`, o sync vira no-op e o app roda 100% local.
 
 **Comandos:** `npm run dev` · `npm run build` · `npm run preview` · `npm run typecheck`
 (`tsc --noEmit`) · `npm run test` (Vitest) · `npm run test:watch` · `npm run lint` (ESLint) ·

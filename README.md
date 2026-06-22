@@ -25,6 +25,8 @@ sustentar a motivação e a consistência, não só registrar progresso. App de 
   para o Microsoft Learn, em cada card da trilha.
 - **Sincronização opcional na nuvem** (Supabase): com login leve, o mesmo progresso acompanha
   PC e celular; sem login, roda 100% local.
+- **Selo de peso do exame** por percurso (15–20% / 30–35%), alinhando o esforço ao peso da prova.
+- **Instalável (PWA)**: adiciona à tela inicial e abre offline, com cara de app.
 - **Persistência local** automática e **acessibilidade** (foco de teclado, `prefers-reduced-motion`).
 
 ## 🧱 Stack
@@ -35,6 +37,7 @@ sustentar a motivação e a consistência, não só registrar progresso. App de 
 | Estilo | Tailwind CSS v4 (tema escuro estilo IDE) |
 | Estado + persistência | Zustand (`persist`) → `localStorage` |
 | Sync entre dispositivos (opt-in) | Supabase (Postgres + Auth, RLS, realtime) |
+| Offline / instalável | PWA (`vite-plugin-pwa`: manifest + service worker) |
 | Hospedagem | Vercel (deploy automático no merge à `main`) |
 
 ## 🚀 Começando
@@ -100,7 +103,8 @@ protegida por RLS, com estratégia *last-write-wins*. Sem login, nada sai do dis
 - [x] Deploy na Vercel (automático no merge à `main`)
 - [x] Testes automatizados (Vitest) + lint/format (ESLint/Prettier)
 - [x] Matéria de apoio por módulo (guia oficial DP-750)
-- [ ] PWA: instalável e offline
+- [x] Selo de peso do exame por percurso
+- [x] PWA: instalável e offline
 - [ ] Export/import de progresso (JSON)
 
 ---
