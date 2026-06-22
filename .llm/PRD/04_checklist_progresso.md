@@ -16,6 +16,11 @@ Using Azure Databricks**.
 > com Azure Databricks (Microsoft Learn). Ajuste-os para baterem exatamente com o seu
 > plano antes de usá-los como *seed* do app. As **contagens, percursos e datas-meta** já
 > estão fiéis ao PRD.
+>
+> 📚 **Matéria de apoio.** As habilidades medidas do [guia oficial DP-750](https://learn.microsoft.com/pt-br/credentials/certifications/resources/study-guides/dp-750)
+> estão mapeadas por módulo em `src/data/guia.ts` e aparecem em cada card do app (tópicos +
+> link do Microsoft Learn). O guia oficial se organiza por **4 domínios com peso de exame**
+> (15-20% / 30-35% / 30-35% / 15-20%), não pelos 15 módulos.
 
 ---
 

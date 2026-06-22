@@ -7,9 +7,9 @@ Plataforma de estudo gamificada para a certificação DP-750
 |---|---|
 | **Produto** | DeltaQuest — ambiente de estudo gamificado |
 | **Autor** | Chavier (mentor DP-750) com Igor Ferreira Rodrigues |
-| **Versão** | 1.0 |
+| **Versão** | 1.0 (corpo original) · adendo de status em 22/06/2026 |
 | **Data** | 18 de junho de 2026 |
-| **Status** | Draft para aprovação |
+| **Status** | Aprovado e implementado — ver §13 (adendo de status) |
 | **Stakeholder único** | Igor Ferreira Rodrigues (candidato DP-750) |
 
 ---
@@ -250,3 +250,36 @@ atualizado em conjunto, para minimizar escritas).
 - [ ] O progresso persiste ao fechar e reabrir o navegador.
 - [ ] Existe botão de reset com confirmação.
 - [ ] Interface legível e usável em desktop e mobile, com tema escuro estilo IDE.
+
+---
+
+## 13. Status de implementação (adendo — 22/06/2026)
+
+> Este adendo registra a evolução do produto sem reescrever o corpo do PRD acima, que
+> permanece como o documento de intenção original. Onde a implementação divergiu da intenção,
+> isso está consolidado aqui (decisões conscientes, não acidentes).
+
+### 13.1 Entregue
+| Fase | Status | Observação |
+|---|---|---|
+| MVP (v1.0) | ✅ | Dashboard, checklist, XP/níveis, badges, ofensiva, countdown, persistência |
+| v1.1 — Simulados | ✅ | Registro, histórico e sparkline de evolução |
+| v1.2 — Polimento | ✅ | Toasts de level-up/badge, glow, freeze de ofensiva, balanceamento |
+| Sync na nuvem | ✅ | Supabase (Postgres + Auth, RLS, realtime), last-write-wins, opt-in |
+| Deploy | ✅ | Vercel, automático no merge à `main` → https://deltaquest.vercel.app |
+| Qualidade | ✅ | Vitest (25 testes), ESLint, Prettier |
+| Matéria de apoio | ✅ | Habilidades medidas do guia oficial DP-750 por módulo (`src/data/guia.ts`) |
+
+### 13.2 Desvios conscientes em relação ao corpo original
+- **Backend e autenticação.** O corpo (§2, §6, §7, §10) descreve "sem backend, sem
+  autenticação, 100% local". A implementação adicionou **sync opt-in via Supabase** com
+  **login leve single-user** (uma conta, para o mesmo progresso em PC e celular; RLS protege a
+  linha do usuário). O **offline-first é preservado**: sem credenciais/login o app roda 100%
+  local — a nuvem é sincronização, não dependência para abrir.
+- **Hospedagem.** Passou a ter deploy na Vercel (build estático), mantendo "sem servidor próprio".
+- **Curva de nível.** O §5.1 sugere `100 × N²`; a implementação usa `100 × (N − 1)²` (offset
+  para o nível 1 começar em 0 XP). Ver `src/data/xp.ts`.
+
+### 13.3 Pendente
+- **PWA** (instalável/offline via `vite-plugin-pwa`) — ainda não implementado.
+- **Export/import de progresso em JSON** (§10 v1.3 e mitigação de risco do §11).
