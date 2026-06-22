@@ -22,4 +22,13 @@ describe('trilha — percursos', () => {
       p4: '15–20%',
     })
   })
+
+  it('todo percurso tem learning path oficial no Microsoft Learn', () => {
+    for (const p of PERCURSOS) {
+      expect(
+        p.learnPathUrl.startsWith('https://learn.microsoft.com/en-us/training/paths/'),
+        `learnPathUrl inesperada em ${p.id}: ${p.learnPathUrl}`,
+      ).toBe(true)
+    }
+  })
 })

@@ -5,6 +5,8 @@ export interface Percurso {
   meta: string
   /** Peso do domínio no exame DP-750 (ex.: '15–20%'), do guia oficial. */
   pesoExame: string
+  /** Learning path oficial do curso DP-750T00 no Microsoft Learn. */
+  learnPathUrl: string
   moduloIds: string[]
 }
 
@@ -35,12 +37,12 @@ export interface Badge {
   descricao: string
 }
 
-/** Conteúdo de apoio de um módulo, derivado do guia oficial DP-750. */
+/** Conteúdo de apoio de um módulo, alinhado ao módulo do curso oficial DP-750T00. */
 export interface GuiaModulo {
-  /** Habilidades medidas (guia oficial) mapeadas a este módulo. */
+  /** Título oficial do módulo no curso (em inglês, como aparece no Microsoft Learn). */
+  tituloOficial: string
+  /** Tópicos do módulo (habilidades cobertas), do guia/curso oficial. */
   topicos: string[]
-  /** URL da doc oficial do Azure Databricks (validada). */
+  /** URL da aula (módulo de treinamento) no Microsoft Learn. */
   learnUrl: string
-  /** Rótulo curto do destino no Microsoft Learn. */
-  learnLabel: string
 }

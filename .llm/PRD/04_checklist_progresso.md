@@ -11,47 +11,46 @@ Using Azure Databricks**.
 | **Data do exame** | 14/09/2026 |
 | **Total de módulos** | 15 (em 4 percursos) |
 
-> ✅ **Títulos confirmados (22/06/2026).** Os títulos dos 15 módulos foram confirmados pelo
-> candidato e são definitivos. Contagens, percursos, datas-meta e pesos de exame seguem fiéis
-> ao guia oficial DP-750 e ao PRD.
+> ✅ **Alinhado ao curso oficial DP-750T00 (22/06/2026).** Os 15 módulos espelham os módulos
+> dos 4 learning paths oficiais (5/4/4/2), com título em PT + título oficial em inglês.
+> Contagens, percursos, datas-meta e pesos seguem fiéis ao curso e ao PRD.
 >
-> 📚 **Matéria de apoio.** As habilidades medidas do [guia oficial DP-750](https://learn.microsoft.com/pt-br/credentials/certifications/resources/study-guides/dp-750)
-> estão mapeadas por módulo em `src/data/guia.ts` e aparecem em cada card do app (tópicos +
-> link do Microsoft Learn). O guia oficial se organiza por **4 domínios com peso de exame**
-> (15-20% / 30-35% / 30-35% / 15-20%), não pelos 15 módulos.
+> 📚 **Matéria de apoio.** Os tópicos de cada módulo e o link para a **aula** no Microsoft Learn
+> vivem em `src/data/guia.ts`; o **learning path** de cada percurso, em `src/data/trilha.ts`.
+> Curso completo: https://learn.microsoft.com/en-us/training/courses/dp-750t00
 
 ---
 
 ## Percurso 1 — Set up and configure environment
 **5 módulos · meta: 08/07/2026 · peso no exame: 15–20%**
 
-- [ ] 1. Explorar o Azure Databricks (workspace, conceitos, lakehouse)
-- [ ] 2. Provisionar e configurar workspaces
-- [ ] 3. Configurar compute: clusters, pools e SQL warehouses
-- [ ] 4. Trabalhar com notebooks, Git folders (Repos) e Databricks CLI/APIs
-- [ ] 5. Introdução ao Apache Spark no Azure Databricks
+- [ ] 1. Explorar o Azure Databricks (*Explore Azure Databricks*)
+- [ ] 2. Entender a arquitetura do Azure Databricks (*Understand Azure Databricks architecture*)
+- [ ] 3. Entender as integrações do Azure Databricks (*Understand Azure Databricks integrations*)
+- [ ] 4. Selecionar e configurar a computação (*Select and configure compute*)
+- [ ] 5. Criar e organizar objetos no Unity Catalog (*Create and organize objects in Unity Catalog*)
 
 ## Percurso 2 — Prepare and process data
 **4 módulos · meta: 05/08/2026 · peso no exame: 30–35%**
 
-- [ ] 6. Processar dados com Apache Spark (DataFrames e transformações)
-- [ ] 7. Gerenciar dados com Delta Lake
-- [ ] 8. Ingestão incremental com Auto Loader e Structured Streaming
-- [ ] 9. Construir pipelines declarativos (Delta Live Tables / Lakeflow)
+- [ ] 6. Projetar e implementar modelagem de dados (*Design and implement data modeling*)
+- [ ] 7. Ingerir dados no Unity Catalog (*Ingest data into Unity Catalog*)
+- [ ] 8. Limpar, transformar e carregar dados (*Cleanse, transform, and load data*)
+- [ ] 9. Implementar e gerenciar restrições de qualidade de dados (*Implement and manage data quality constraints*)
 
 ## Percurso 3 — Deploy and maintain data pipelines and workloads
 **4 módulos · meta: 19/08/2026 · peso no exame: 30–35%**
 
-- [ ] 10. Orquestrar workloads com Databricks Workflows / Jobs
-- [ ] 11. CI/CD com Databricks Asset Bundles
-- [ ] 12. Monitorar e fazer troubleshooting de pipelines e jobs
-- [ ] 13. Otimização de performance e custo (Photon, particionamento, Z-order)
+- [ ] 10. Projetar e implementar pipelines de dados (*Design and implement data pipelines*)
+- [ ] 11. Implementar Lakeflow Jobs (*Implement Lakeflow Jobs*)
+- [ ] 12. Implementar processos do ciclo de vida de desenvolvimento (*Implement development lifecycle processes*)
+- [ ] 13. Monitorar, solucionar problemas e otimizar cargas de trabalho (*Monitor, troubleshoot and optimize workloads*)
 
 ## Percurso 4 — Secure and govern Unity Catalog objects
 **2 módulos · meta: 26/08/2026 · peso no exame: 15–20%**
 
-- [ ] 14. Implementar governança de dados com Unity Catalog
-- [ ] 15. Proteger e auditar objetos do Unity Catalog (permissões e linhagem)
+- [ ] 14. Proteger objetos do Unity Catalog (*Secure Unity Catalog objects*)
+- [ ] 15. Governar objetos do Unity Catalog (*Govern Unity Catalog objects*)
 
 ---
 

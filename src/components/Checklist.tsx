@@ -52,21 +52,28 @@ function ModuloItem({
 
   return (
     <li>
-      <div className="flex items-center gap-1">
+      <div className="flex items-start gap-1">
         <button
           onClick={() => toggle(id)}
           aria-pressed={done}
-          className="flex flex-1 items-center gap-3 rounded-md px-2 py-1.5 text-left transition-colors hover:bg-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-xp/40"
+          className="flex flex-1 items-start gap-3 rounded-md px-2 py-1.5 text-left transition-colors hover:bg-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-xp/40"
         >
           <span
-            className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border text-xs font-bold ${
+            className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border text-xs font-bold ${
               done ? 'border-done bg-done/20 text-done' : 'border-border text-transparent'
             }`}
           >
             ✓
           </span>
-          <span className={`text-sm ${done ? 'text-muted line-through' : 'text-text'}`}>
-            {titulo}
+          <span className="min-w-0">
+            <span className={`block text-sm ${done ? 'text-muted line-through' : 'text-text'}`}>
+              {titulo}
+            </span>
+            {guia && (
+              <span className="block font-mono text-[0.7rem] text-muted">
+                {guia.tituloOficial}
+              </span>
+            )}
           </span>
         </button>
         {guia && (
@@ -74,7 +81,7 @@ function ModuloItem({
             onClick={() => setAberto((v) => !v)}
             aria-expanded={aberto}
             aria-controls={painelId}
-            aria-label={aberto ? 'Ocultar matéria de apoio' : 'Ver matéria de apoio'}
+            aria-label={aberto ? 'Ocultar tópicos do módulo' : 'Ver tópicos do módulo'}
             className="shrink-0 rounded-md px-2 py-1.5 font-mono text-xs text-muted transition-colors hover:bg-surface-2 hover:text-badge focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-badge/40"
           >
             <span className={`inline-block transition-transform ${aberto ? 'rotate-90' : ''}`}>
@@ -89,7 +96,7 @@ function ModuloItem({
           className="mb-1 ml-7 mt-1 rounded-md border-l-2 border-border bg-surface-2/40 px-3 py-2"
         >
           <p className="mb-1.5 font-mono text-[0.65rem] uppercase tracking-wide text-muted">
-            Habilidades medidas · guia oficial DP-750
+            Tópicos do módulo · curso oficial DP-750
           </p>
           <ul className="space-y-1">
             {guia.topicos.map((t) => (
@@ -105,9 +112,10 @@ function ModuloItem({
             href={guia.learnUrl}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`Estudar a aula "${guia.tituloOficial}" no Microsoft Learn`}
             className="mt-2 inline-flex items-center gap-1 rounded font-mono text-xs text-badge hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-badge/40"
           >
-            Microsoft Learn: {guia.learnLabel} <span aria-hidden>↗</span>
+            Estudar no Microsoft Learn <span aria-hidden>↗</span>
           </a>
         </div>
       )}
@@ -128,15 +136,24 @@ function PercursoBlock({ percursoId }: { percursoId: string }) {
   return (
     <div className="rounded-lg border border-border bg-surface p-4">
       <div className="flex items-baseline justify-between gap-3">
-        <h3 className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm font-semibold text-text">
-          <span>{p.nome}</span>
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+          <h3 className="text-sm font-semibold text-text">{p.nome}</h3>
           <span
-            className="shrink-0 rounded border border-border px-1.5 py-0.5 font-mono text-[0.65rem] font-normal text-muted"
+            className="shrink-0 rounded border border-border px-1.5 py-0.5 font-mono text-[0.65rem] text-muted"
             title="Peso do domínio no exame DP-750"
           >
             peso {p.pesoExame}
           </span>
-        </h3>
+          <a
+            href={p.learnPathUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Abrir o learning path "${p.nome}" no Microsoft Learn`}
+            className="shrink-0 rounded font-mono text-[0.65rem] text-muted transition-colors hover:text-badge focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-badge/40"
+          >
+            curso oficial ↗
+          </a>
+        </div>
         <span
           className={`shrink-0 font-mono text-xs ${
             completo ? 'text-done' : atrasado ? 'text-streak' : 'text-muted'
