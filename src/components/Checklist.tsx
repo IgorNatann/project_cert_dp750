@@ -1,3 +1,4 @@
+import { useId, useState } from 'react'
 import { selectXp, useProgress } from '../store/useProgress'
 import {
   MODULOS,
@@ -5,7 +6,8 @@ import {
   TAREFAS_REVISAO,
   TAREFAS_SIMULADO,
 } from '../data/trilha'
-import type { Tarefa } from '../types'
+import { GUIA } from '../data/guia'
+import type { GuiaModulo, Tarefa } from '../types'
 import { daysUntil, formatBR } from '../lib/date'
 import { ProgressBar } from './ProgressBar'
 
@@ -30,6 +32,85 @@ function Item({ id, titulo }: { id: string; titulo: string }) {
           {titulo}
         </span>
       </button>
+    </li>
+  )
+}
+
+function ModuloItem({
+  id,
+  titulo,
+  guia,
+}: {
+  id: string
+  titulo: string
+  guia?: GuiaModulo
+}) {
+  const done = useProgress((s) => Boolean(s.concluidos[id]))
+  const toggle = useProgress((s) => s.toggleConcluido)
+  const [aberto, setAberto] = useState(false)
+  const painelId = useId()
+
+  return (
+    <li>
+      <div className="flex items-center gap-1">
+        <button
+          onClick={() => toggle(id)}
+          aria-pressed={done}
+          className="flex flex-1 items-center gap-3 rounded-md px-2 py-1.5 text-left transition-colors hover:bg-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-xp/40"
+        >
+          <span
+            className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border text-xs font-bold ${
+              done ? 'border-done bg-done/20 text-done' : 'border-border text-transparent'
+            }`}
+          >
+            ✓
+          </span>
+          <span className={`text-sm ${done ? 'text-muted line-through' : 'text-text'}`}>
+            {titulo}
+          </span>
+        </button>
+        {guia && (
+          <button
+            onClick={() => setAberto((v) => !v)}
+            aria-expanded={aberto}
+            aria-controls={painelId}
+            aria-label={aberto ? 'Ocultar matéria de apoio' : 'Ver matéria de apoio'}
+            className="shrink-0 rounded-md px-2 py-1.5 font-mono text-xs text-muted transition-colors hover:bg-surface-2 hover:text-badge focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-badge/40"
+          >
+            <span className={`inline-block transition-transform ${aberto ? 'rotate-90' : ''}`}>
+              ▸
+            </span>
+          </button>
+        )}
+      </div>
+      {guia && aberto && (
+        <div
+          id={painelId}
+          className="mb-1 ml-7 mt-1 rounded-md border-l-2 border-border bg-surface-2/40 px-3 py-2"
+        >
+          <p className="mb-1.5 font-mono text-[0.65rem] uppercase tracking-wide text-muted">
+            Habilidades medidas · guia oficial DP-750
+          </p>
+          <ul className="space-y-1">
+            {guia.topicos.map((t) => (
+              <li key={t} className="flex gap-2 text-xs text-text/90">
+                <span aria-hidden className="select-none text-badge">
+                  ›
+                </span>
+                <span>{t}</span>
+              </li>
+            ))}
+          </ul>
+          <a
+            href={guia.learnUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-flex items-center gap-1 rounded font-mono text-xs text-badge hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-badge/40"
+          >
+            Microsoft Learn: {guia.learnLabel} <span aria-hidden>↗</span>
+          </a>
+        </div>
+      )}
     </li>
   )
 }
@@ -64,7 +145,7 @@ function PercursoBlock({ percursoId }: { percursoId: string }) {
       </div>
       <ul className="mt-3 space-y-0.5">
         {mods.map((m) => (
-          <Item key={m.id} id={m.id} titulo={m.titulo} />
+          <ModuloItem key={m.id} id={m.id} titulo={m.titulo} guia={GUIA[m.id]} />
         ))}
       </ul>
     </div>
